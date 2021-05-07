@@ -21,7 +21,7 @@ h1 {
   position: relative;
   letter-spacing: -0.20em;
   text-transform: uppercase;
-  transition: text-shadow 5s ease;
+  transition: text-shadow 3.5s ease;
 }
 
 h1.visible {
