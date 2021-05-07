@@ -7,6 +7,6 @@
   "author": "Chewam",
   "license": "MIT",
   "scripts": {
-    "start": "npx http-server"
+    "start": "npx http-server ./src"
   }
 }
