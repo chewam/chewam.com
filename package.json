@@ -1,0 +1,12 @@
+{
+  "name": "chewam.com",
+  "version": "1.0.0",
+  "description": "Chewam website",
+  "main": "index.js",
+  "repository": "git@github.com:chewam/chewam.com.git",
+  "author": "Chewam",
+  "license": "MIT",
+  "scripts": {
+    "start": "npx http-server"
+  }
+}
