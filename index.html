@@ -1,95 +1,28 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Chewam</title>
-    <link rel="stylesheet" href="/style.css">
-    <link rel="icon" href="/favicon.png" type="image/png">
-  </head>
-  <body>
-    <h1>
-      <span>c</span>
-      <span>h</span>
-      <span>e</span>
-      <span>w</span>
-      <span>a</span>
-      <span>m</span>
-    </h1>
-    <h2>
-      <span id="textscramble1"></span>
-      <span id="textscramble2"></span>
-    </h2>
-    <script>
-      class TextScramble {
-        constructor(el) {
-          this.el = el
-          this.chars = '!<>-_\\/[]{}—=+*^?#________'
-          this.update = this.update.bind(this)
-        }
-        setText(newText) {
-          const oldText = this.el.innerText
-          const length = Math.max(oldText.length, newText.length)
-          const promise = new Promise((resolve) => this.resolve = resolve)
-          this.queue = []
-          for (let i = 0; i < length; i++) {
-            const from = oldText[i] || ''
-            const to = newText[i] || ''
-            const start = Math.floor(Math.random() * 40)
-            const end = start + Math.floor(Math.random() * 40)
-            this.queue.push({ from, to, start, end })
-          }
-          cancelAnimationFrame(this.frameRequest)
-          this.frame = 0
-          this.update()
-          return promise
-        }
-        update() {
-          let output = ''
-          let complete = 0
-          for (let i = 0, n = this.queue.length; i < n; i++) {
-            let { from, to, start, end, char } = this.queue[i]
-            if (this.frame >= end) {
-              complete++
-              output += to
-            } else if (this.frame >= start) {
-              if (!char || Math.random() < 0.28) {
-                char = this.randomChar()
-                this.queue[i].char = char
-              }
-              output += `<span class="dud">${char}</span>`
-            } else {
-              output += from
-            }
-          }
-          this.el.innerHTML = output
-          if (complete === this.queue.length) {
-            this.resolve()
-          } else {
-            this.frameRequest = requestAnimationFrame(this.update)
-            this.frame++
-          }
-        }
-        randomChar() {
-          return this.chars[Math.floor(Math.random() * this.chars.length)]
-        }
-      }
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>chewam // browser instrument</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="icon" href="favicon.png" type="image/png" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div id="root"></div>
 
-      const h1 = document.querySelector('h1')
-      const el1 = document.querySelector('#textscramble1')
-      const el2 = document.querySelector('#textscramble2')
-      const fx1 = new TextScramble(el1)
-      const fx2 = new TextScramble(el2)
-      
-      setTimeout(() => {
-        h1.classList.add("visible")
-        setTimeout(() => {
-          fx1.setText("web").then(() => {
-            setTimeout(() => {
-              fx2.setText("development")
-            }, 500)
-          })
-        }, 3000)
-      }, 500)
-    </script>
-  </body>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="src/palettes.jsx"></script>
+<script type="text/babel" src="src/hooks.jsx"></script>
+<script type="text/babel" src="src/shader.jsx"></script>
+<script type="text/babel" src="src/cursor.jsx"></script>
+<script type="text/babel" src="src/modules.jsx"></script>
+<script type="text/babel" src="src/app.jsx"></script>
+</body>
 </html>
