@@ -1,6 +1,7 @@
 {
   "name": "chewam.com",
   "version": "1.0.0",
+  "private": true,
   "description": "Chewam website",
   "main": "index.js",
   "repository": "git@github.com:chewam/chewam.com.git",
